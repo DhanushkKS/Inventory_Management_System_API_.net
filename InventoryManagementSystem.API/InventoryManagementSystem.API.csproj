@@ -20,6 +20,11 @@
 
     <ItemGroup>
       <ProjectReference Include="..\InventoryManagementSystem.Application\InventoryManagementSystem.Application.csproj" />
+      <ProjectReference Include="..\InventoryManagementSystem.Infrastructure\InventoryManagementSystem.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Controllers\" />
     </ItemGroup>
 
 </Project>
