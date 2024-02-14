@@ -16,9 +16,10 @@ public class ProductsController:ApiControllerBase
     }
 
     [HttpGet]
-    public async Task<List<Product>> GetAll()
+    public async Task<IActionResult> GetAll()
     {
-        return await _mediator.Send(new GetProductListQuery());
+           var products= await _mediator.Send(new GetProductListQuery());
+           return Ok(products);
     }
 
     [HttpPost]
