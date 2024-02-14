@@ -18,6 +18,7 @@ builder.Services.AddDbContext<IMDbContext>(
         configuration.GetConnectionString("DefaultConnection"),
         b=>b.MigrationsAssembly(typeof(IMDbContext).Assembly.GetName().Name)));
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IPurchaseRepository, PurchaseRepository>();
 builder.Services.AddMediatR(c => c.RegisterServicesFromAssemblies(typeof(IProductRepository).Assembly));
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 var app = builder.Build();
@@ -25,6 +26,7 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    app.UseCors();
     app.UseSwagger();
     app.UseSwaggerUI();
 }
