@@ -1,4 +1,6 @@
 using InventoryManagementSystem.Application.Dtos;
+using InventoryManagementSystem.Application.Dtos.ProductDtos;
+using InventoryManagementSystem.Application.Dtos.PurchaseDtos;
 using InventoryManagementSystem.Domain.Entities;
 
 namespace InventoryManagementSystem.Application.Profile;
@@ -8,5 +10,6 @@ public class ProfileMapping:AutoMapper.Profile
     public ProfileMapping()
     {
         CreateMap<CreateProductDto, Product>();
+        CreateMap<CreatePurchaseDto, Purchase>();
     }
 }
