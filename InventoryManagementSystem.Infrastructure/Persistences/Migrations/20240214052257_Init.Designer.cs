@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace InventoryManagementSystem.Infrastructure.Persistences.Migrations
 {
     [DbContext(typeof(IMDbContext))]
-    [Migration("20240213044057_DatabaseInitialized")]
-    partial class DatabaseInitialized
+    [Migration("20240214052257_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -123,6 +123,8 @@ namespace InventoryManagementSystem.Infrastructure.Persistences.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ProductId");
+
                     b.ToTable("Sales");
                 });
 
@@ -149,6 +151,15 @@ namespace InventoryManagementSystem.Infrastructure.Persistences.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Stocks");
+                });
+
+            modelBuilder.Entity("InventoryManagementSystem.Domain.Entities.Sale", b =>
+                {
+                    b.HasOne("InventoryManagementSystem.Domain.Entities.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
