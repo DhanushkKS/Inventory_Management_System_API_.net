@@ -25,6 +25,8 @@ public class PurchaseRepository:IPurchaseRepository
 
     public Purchase Create(Purchase purchase)
     {
+        var isExist = _dbContext.Purchases.SingleOrDefault(i => i.InvoiceNumber == purchase.InvoiceNumber);
+        if (isExist != null) return purchase;
         _dbContext.Purchases.Add(purchase);
         _dbContext.SaveChanges();
         return purchase;

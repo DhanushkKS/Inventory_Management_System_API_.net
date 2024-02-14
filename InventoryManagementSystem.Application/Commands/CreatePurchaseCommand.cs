@@ -12,19 +12,20 @@ public record CreatePurchaseCommand(CreatePurchaseDto Purchase):IRequest<Purchas
 public class CreatePurchaseCommandHandler:IRequestHandler<CreatePurchaseCommand,Purchase>
 {
     private readonly IMapper _mapper;
-    private readonly IPurchaseRepository _PurchaseRepository;
+    private readonly IPurchaseRepository _purchaseRepository;
     
-    public CreatePurchaseCommandHandler(IMapper mapper, IPurchaseRepository PurchaseRepository)
+    public CreatePurchaseCommandHandler(IMapper mapper, IPurchaseRepository purchaseRepository)
     {
         _mapper = mapper;
-        _PurchaseRepository = PurchaseRepository;
+        _purchaseRepository = purchaseRepository;
     }
 
     
     public Task<Purchase> Handle(CreatePurchaseCommand request, CancellationToken cancellationToken)
     {
-        var Purchase = _mapper.Map<Purchase>(request.Purchase);
-        _PurchaseRepository.Create(Purchase);
-        return Task.FromResult(Purchase);
+         
+        var purchase = _mapper.Map<Purchase>(request.Purchase);
+        _purchaseRepository.Create(purchase);
+        return Task.FromResult(purchase);
     }
 }
