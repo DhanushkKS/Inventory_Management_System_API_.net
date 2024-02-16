@@ -15,6 +15,11 @@ public class ProductsController:ApiControllerBase
         _mediator = mediator;
     }
 
+    #region Products API
+
+    
+
+   
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
@@ -27,4 +32,5 @@ public class ProductsController:ApiControllerBase
     {
         return await _mediator.Send(command);
     }
+    #endregion
 }

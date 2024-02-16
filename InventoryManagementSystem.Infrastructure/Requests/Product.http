@@ -1,0 +1,16 @@
+###Get All products
+GET https://localhost:44346/inventoryManagementSystem/api/v1/Products
+
+###Create Product
+
+POST https://localhost:44346/inventoryManagementSystem/api/v1/Products
+Content-Type: application/json
+
+{
+ "product": {
+  "name":"MSI gf63 Gaming laptop",
+  "category": "laptops",
+  "price": 299.9,
+  "productDetails": "ceve egvwegew"
+ }
+}

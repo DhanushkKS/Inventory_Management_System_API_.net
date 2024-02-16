@@ -7,7 +7,7 @@ using MediatR;
 
 namespace InventoryManagementSystem.Application.Commands;
 
-public record CreateProductCommand(CreateProductDto Product):IRequest<Product>;
+public record CreateProductCommand(CreateProductDto Productyy):IRequest<Product>;
 
 public class CreateProductCommandHandler:IRequestHandler<CreateProductCommand,Product>
 {
@@ -23,7 +23,7 @@ public class CreateProductCommandHandler:IRequestHandler<CreateProductCommand,Pr
     
     public Task<Product> Handle(CreateProductCommand request, CancellationToken cancellationToken)
     {
-        var product = _mapper.Map<Product>(request.Product);
+        var product = _mapper.Map<Product>(request.Productyy);
         _productRepository.CreateProduct(product);
         return Task.FromResult(product);
     }
