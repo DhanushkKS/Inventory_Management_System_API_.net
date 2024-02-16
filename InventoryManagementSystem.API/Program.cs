@@ -1,5 +1,6 @@
 using InventoryManagementSystem.Application.Repositories;
 using InventoryManagementSystem.Infrastructure;
+using InventoryManagementSystem.Infrastructure.Persistences.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,6 +20,7 @@ builder.Services.AddDbContext<IMDbContext>(
         b=>b.MigrationsAssembly(typeof(IMDbContext).Assembly.GetName().Name)));
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IPurchaseRepository, PurchaseRepository>();
+builder.Services.AddScoped<ISaleRepository,SaleRepository>();
 builder.Services.AddMediatR(c => c.RegisterServicesFromAssemblies(typeof(IProductRepository).Assembly));
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 var app = builder.Build();
