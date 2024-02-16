@@ -25,9 +25,15 @@ public class ProductRepository:IProductRepository
 
     public Product CreateProduct(Product product)
     {
-        product.CreatedAt=DateTime.Now;
-        _dbContext.Products.Add(product);
-        _dbContext.SaveChanges();
-        return product;
+        var isExist =
+            _dbContext.Products.SingleOrDefault(p => p.Name.ToLower().Trim() == product.Name.ToLower().Trim());
+        if (isExist==null)
+        {
+            product.CreatedAt=DateTime.Now;
+            _dbContext.Products.Add(product);
+            _dbContext.SaveChanges();
+            return product;
+        }
+        throw new Exception("Product already exists");
     }
 }
