@@ -21,7 +21,7 @@ public class SaleController:ApiControllerBase
         return await _mediator.Send(new GetSaleListQuery());
     }
 
-    [HttpPost]
+    [HttpPost("create")]
     public async Task<Sale> Create(CreateSaleCommand command)
     {
         return await _mediator.Send(command);
