@@ -25,6 +25,7 @@ public class ProductRepository:IProductRepository
 
     public Product CreateProduct(Product product)
     {
+        product.CreatedAt=DateTime.Now;
         _dbContext.Products.Add(product);
         _dbContext.SaveChanges();
         return product;
