@@ -12,11 +12,32 @@ public class IMDbContext:DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Product>()
+            .Property(p => p.CreatedAt)
+            .HasColumnType("timestamp without time zone");
+        
+        modelBuilder.Entity<Purchase>()
+            .Property(p => p.CreatedAt)
+            .HasColumnType("timestamp without time zone");
+        
+        modelBuilder.Entity<Stock>()
+            .Property(p => p.CreatedAt)
+            .HasColumnType("timestamp without time zone");
+        modelBuilder.Entity<Stock>()
+            .Property(p => p.ModifiedDate)
+            .HasColumnType("timestamp without time zone");
+        modelBuilder.Entity<Sale>()
+            .Property(p => p.CreatedAt)
+            .HasColumnType("timestamp without time zone");
+        
+        
         modelBuilder.Entity<Sale>()
             .HasOne<Product>()
             .WithMany()
-            .HasForeignKey(p => p.ProductId);
-        
+            .HasForeignKey(p => p.ProductId)
+            
+            ;
+            
         modelBuilder.Entity<Purchase>()
             .HasOne<Product>()
             .WithMany()
@@ -26,6 +47,29 @@ public class IMDbContext:DbContext
             .HasOne<Product>()
             .WithMany()
             .HasForeignKey(p => p.ProductId);
+        //Data seed
+        modelBuilder.Entity<Product>()
+            .HasData(new List<Product>()
+            {
+                new Product()
+                {
+                    Id = 1,
+                    Category = "Electronic",
+                    CreatedAt = DateTime.Now,
+                    Name = "Apple Iphone 15",
+                    Price = 34.55f,
+                    ProductDetails = "Apple smart phone"
+                },
+                new Product()
+                {
+                    Id = 2,
+                    Category = "Electronic",
+                    CreatedAt = DateTime.Now,
+                    Name = "Apple Iphone 15",
+                    Price = 34.55f,
+                    ProductDetails = "Apple smart phone"
+                }
+            }  );
     }
 
     public DbSet<Product> Products {get; set;} 

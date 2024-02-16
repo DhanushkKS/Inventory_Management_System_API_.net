@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace InventoryManagementSystem.Infrastructure.Persistences.Migrations
 {
     [DbContext(typeof(IMDbContext))]
-    [Migration("20240214052257_Init")]
-    partial class Init
+    [Migration("20240216054654_DataSeeding")]
+    partial class DataSeeding
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,8 +37,8 @@ namespace InventoryManagementSystem.Infrastructure.Persistences.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateOnly>("CreatedAt")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -54,6 +54,26 @@ namespace InventoryManagementSystem.Infrastructure.Persistences.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Category = "Electronic",
+                            CreatedAt = new DateTime(2024, 2, 16, 11, 16, 54, 443, DateTimeKind.Local).AddTicks(7498),
+                            Name = "Apple Iphone 15",
+                            Price = 34.55f,
+                            ProductDetails = "Apple smart phone"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Category = "Electronic",
+                            CreatedAt = new DateTime(2024, 2, 16, 11, 16, 54, 443, DateTimeKind.Local).AddTicks(7513),
+                            Name = "Apple Iphone 15",
+                            Price = 34.55f,
+                            ProductDetails = "Apple smart phone"
+                        });
                 });
 
             modelBuilder.Entity("InventoryManagementSystem.Domain.Entities.Purchase", b =>
@@ -64,8 +84,8 @@ namespace InventoryManagementSystem.Infrastructure.Persistences.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateOnly>("CreatedAt")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<float>("InvoiceAmount")
                         .HasColumnType("real");
@@ -86,6 +106,8 @@ namespace InventoryManagementSystem.Infrastructure.Persistences.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ProductId");
+
                     b.ToTable("Purchases");
                 });
 
@@ -97,8 +119,8 @@ namespace InventoryManagementSystem.Infrastructure.Persistences.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateOnly>("CreatedAt")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("CustomerName")
                         .IsRequired()
@@ -136,11 +158,11 @@ namespace InventoryManagementSystem.Infrastructure.Persistences.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateOnly>("CreatedAt")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime>("ModifiedDate")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("integer");
@@ -150,10 +172,30 @@ namespace InventoryManagementSystem.Infrastructure.Persistences.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ProductId");
+
                     b.ToTable("Stocks");
                 });
 
+            modelBuilder.Entity("InventoryManagementSystem.Domain.Entities.Purchase", b =>
+                {
+                    b.HasOne("InventoryManagementSystem.Domain.Entities.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("InventoryManagementSystem.Domain.Entities.Sale", b =>
+                {
+                    b.HasOne("InventoryManagementSystem.Domain.Entities.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("InventoryManagementSystem.Domain.Entities.Stock", b =>
                 {
                     b.HasOne("InventoryManagementSystem.Domain.Entities.Product", null)
                         .WithMany()
