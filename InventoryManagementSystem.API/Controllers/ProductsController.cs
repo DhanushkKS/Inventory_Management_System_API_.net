@@ -27,7 +27,7 @@ public class ProductsController:ApiControllerBase
            return Ok(products);
     }
 
-    [HttpPost]
+    [HttpPost("create")]
     public async Task<Product> Create(CreateProductCommand command)
     {
         return await _mediator.Send(command);
