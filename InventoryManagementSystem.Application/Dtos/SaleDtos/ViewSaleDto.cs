@@ -1,6 +1,6 @@
-namespace InventoryManagementSystem.Domain.Entities;
+namespace InventoryManagementSystem.Application.Dtos.SaleDtos;
 
-public class Sale : BaseEntity
+public class ViewSaleDto
 {
     public String InvoiceNumber { get; set; }
     public string CustomerName { get; set; }
