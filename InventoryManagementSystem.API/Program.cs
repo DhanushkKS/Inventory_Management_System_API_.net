@@ -25,6 +25,20 @@ builder.Services.AddScoped<IStockRepository, StockRepository>();
 
 builder.Services.AddMediatR(c => c.RegisterServicesFromAssemblies(typeof(IProductRepository).Assembly));
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+builder.Services.AddCors(op => 
+{
+    op.AddPolicy("AllowOrigin",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:4200")
+                .AllowCredentials()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+        });
+    
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
